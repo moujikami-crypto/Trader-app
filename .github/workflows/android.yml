@@ -30,6 +30,18 @@ jobs:
           npm install --no-save @capacitor/assets@3
           npx capacitor-assets generate --android --iconBackgroundColor '#000000' --iconBackgroundColorDark '#000000'
           npx cap sync android
+      - name: Apply Meta Team adaptive icon
+        run: |
+          RES=mobile/android/app/src/main/res
+          rm -f $RES/drawable-v24/ic_launcher_foreground.xml $RES/drawable/ic_launcher_background.xml
+          for d in mdpi hdpi xhdpi xxhdpi xxxhdpi; do
+            cp mobile/assets/android-icon/ic_launcher_foreground-$d.png $RES/mipmap-$d/ic_launcher_foreground.png
+          done
+          mkdir -p $RES/mipmap-anydpi-v26 $RES/values
+          for n in ic_launcher ic_launcher_round; do
+            printf '<?xml version="1.0" encoding="utf-8"?>\n<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">\n  <background android:drawable="@color/ic_launcher_background"/>\n  <foreground android:drawable="@mipmap/ic_launcher_foreground"/>\n</adaptive-icon>\n' > $RES/mipmap-anydpi-v26/$n.xml
+          done
+          printf '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n  <color name="ic_launcher_background">#000000</color>\n</resources>\n' > $RES/values/ic_launcher_background.xml
       - name: Build debug APK
         working-directory: mobile/android
         run: ./gradlew assembleDebug
