@@ -1,6 +1,9 @@
 name: Build Android APK (debug)
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - 'apk-*'
 jobs:
   apk:
     runs-on: ubuntu-latest
