@@ -1,0 +1,6 @@
+private-sources/
+*.zip
+node_modules/
+mobile/android/
+mobile/www/
+.env

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>دستیار هوشمند بازرگانان</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--ink:#14213d;--mut:#667089;--pri:#1d4ed8;--pri2:#e7eefe;--bd:#e1e6f1;--acc:#0e9f6e;--warn:#b45309;--warnbg:#fff7e6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Vazirmatn,Tahoma,sans-serif;line-height:1.9;font-size:15px}
+header{background:linear-gradient(135deg,#0b1d4d,#1d4ed8);color:#fff;padding:22px 16px 58px;text-align:center}
+header h1{margin:0 0 2px;font-size:21px;font-weight:800}
+header p{margin:0;opacity:.85;font-size:12.5px}
+.wrap{max-width:860px;margin:-40px auto 40px;padding:0 12px}
+.tabs{display:flex;gap:6px;background:var(--card);border-radius:14px;padding:6px;box-shadow:0 8px 28px rgba(20,33,61,.13);overflow-x:auto}
+.tab{flex:1;min-width:max-content;background:transparent;color:var(--mut);padding:8px 14px;border:0;border-radius:10px;font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}
+.tab.on{background:var(--pri);color:#fff}
+.links{display:grid;gap:10px}.lk{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--bd);border-radius:12px;padding:10px 12px;background:#fbfcff}.lk:hover{border-color:var(--pri);background:var(--pri2)}.lk b{display:block;font-size:14.5px}.lk span{font-size:12.5px;color:var(--mut)}
+textarea{width:100%;border:1px solid var(--bd);border-radius:10px;padding:10px;font:13.5px/1.9 ui-monospace,Menlo,Consolas,monospace;background:#fbfcff;color:var(--ink);resize:vertical}
+.pane{display:none;margin-top:12px}.pane.on{display:block}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:12px}
+.card h2{margin:0 0 10px;font-size:15.5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+label{display:block;font-size:12.5px;color:var(--mut);margin-bottom:2px}
+input,select{width:100%;border:1px solid var(--bd);border-radius:10px;padding:8px 10px;font:inherit;background:#fbfcff;color:var(--ink)}
+input[type=number],.ltr{direction:ltr;text-align:left}
+button{font:inherit;border:0;border-radius:10px;cursor:pointer;font-weight:600}
+.btn{background:var(--pri);color:#fff;padding:8px 18px}
+.btn.ghost{background:var(--pri2);color:var(--pri)}
+.res{background:#ecfaf4;border:1px solid #bfe8d6;border-radius:12px;padding:12px;margin-top:10px;color:#0b5a41}
+.res .big{font-size:21px;font-weight:800;direction:ltr;text-align:right}
+.kv{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed #cfeadf;padding:3px 0;font-size:14px}
+.kv:last-child{border:0}.kv b{direction:ltr}
+.note{font-size:12.5px;color:var(--mut);margin-top:8px}
+.warn{background:var(--warnbg);border:1px solid #f3d9a4;color:var(--warn);border-radius:10px;padding:8px 10px;font-size:12.5px;margin-top:8px}
+.row{display:flex;gap:8px;align-items:end;flex-wrap:wrap}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+td,th{padding:5px 6px;border-bottom:1px solid var(--bd);text-align:right}
+td.n{direction:ltr;text-align:left}
+.search{display:flex;gap:8px}
+.search input{flex:1}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin:12px 2px}
+.chip{background:var(--card);border:1px solid var(--bd);color:var(--pri);border-radius:20px;padding:2px 13px;font-size:13px;cursor:pointer}
+.answer{font-size:15.5px;white-space:pre-wrap}
+.src{border-top:1px dashed var(--bd);padding:10px 0;font-size:13.5px}.src:first-of-type{border:0}
+.pg{display:inline-block;background:var(--pri2);color:var(--pri);border-radius:7px;padding:0 9px;font-size:12px;font-weight:600;margin-left:6px}
+.bar{display:inline-block;width:60px;height:5px;background:var(--bd);border-radius:5px;vertical-align:middle;margin-right:4px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc)}
+mark{background:#fff1a6;border-radius:3px;padding:0 1px}
+.empty{text-align:center;color:var(--mut);padding:18px 8px}
+.dots:after{content:'';animation:d 1.2s steps(4) infinite}@keyframes d{0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}}
+
+body{padding-bottom:calc(78px + env(safe-area-inset-bottom))}
+.appbar{position:sticky;top:0;z-index:20;background:linear-gradient(135deg,#0a1a4a,#1746d1);color:#fff;padding:calc(12px + env(safe-area-inset-top)) 16px 14px;box-shadow:0 4px 18px rgba(10,26,74,.28)}
+.ab-in{display:flex;align-items:center;gap:11px;max-width:860px;margin:0 auto}
+.logo{width:36px;height:42px;border-radius:9px;object-fit:cover;background:#0b1d4d;flex:none}
+.ab-in b{display:block;font-size:16.5px;font-weight:800;line-height:1.4}
+.ab-in span{font-size:12px;opacity:.8}
+.wrap{margin:14px auto 0 !important}
+.card{box-shadow:0 6px 20px rgba(16,28,58,.07);border-radius:16px;border:0}
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:30;display:flex;background:#fff;border-top:1px solid var(--bd);padding:6px 8px calc(6px + env(safe-area-inset-bottom));box-shadow:0 -6px 22px rgba(16,28,58,.08)}
+.bnav button{flex:1;background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 0;color:#8a94ab;font:inherit;font-size:11.5px;font-weight:600;cursor:pointer;border-radius:12px}
+.bnav button svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.bnav button.on{color:var(--pri)}
+.bnav button.on svg{stroke-width:2.3}
+.hero{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff;background:linear-gradient(135deg,#1746d1,#0a1a4a);border-radius:20px;padding:16px;box-shadow:0 10px 26px rgba(23,70,209,.32)}
+.hero-i{width:52px;height:52px;border-radius:16px;background:rgba(255,255,255,.17);display:flex;align-items:center;justify-content:center;font-size:27px;flex:none}
+.hero-t{flex:1}.hero-t b{display:block;font-size:16.5px;font-weight:800}.hero-t span{font-size:12.5px;opacity:.85;line-height:1.7;display:block}
+.hero-a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex:none}
+.hero-a svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2.5}
+.sech{font-weight:800;font-size:14.5px;margin:20px 4px 8px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{display:block;text-align:right;text-decoration:none;color:var(--ink);background:#fff;border:0;border-radius:18px;padding:14px;box-shadow:0 6px 20px rgba(16,28,58,.07);cursor:pointer;font:inherit}
+.tile i{display:flex;width:42px;height:42px;border-radius:13px;align-items:center;justify-content:center;font-style:normal;font-size:21px;font-weight:800;margin-bottom:8px}
+.tile b{display:block;font-size:14px;line-height:1.5}.tile span{display:block;font-size:12px;color:var(--mut);line-height:1.6;margin-top:2px}
+.tile:active,.hero:active{transform:scale(.98)}
+
+.brand{display:flex;gap:11px;align-items:center;margin-top:18px;background:#fff;border-radius:16px;padding:12px;box-shadow:0 6px 20px rgba(16,28,58,.07)}
+.brand img{width:40px;height:47px;border-radius:9px;object-fit:cover;flex:none}
+.brand b{display:block;font-size:13.5px}.brand span{display:block;font-size:11.5px;color:var(--mut);line-height:1.7}
+.q{margin-bottom:12px}.opts{display:grid;gap:7px;margin-top:4px}
+.opts button{background:#f6f8fd;border:1.5px solid var(--bd);border-radius:12px;padding:9px 12px;font:inherit;font-size:13.5px;color:var(--ink);text-align:right;cursor:pointer}
+.opts button.on{border-color:var(--pri);background:var(--pri2);color:var(--pri);font-weight:600}
+#adv-out .tag{display:inline-block;background:var(--pri);color:#fff;border-radius:9px;padding:0 12px;font-size:22px;font-weight:800;direction:ltr}
+#adv-out ul{margin:8px 0 0;padding-right:18px}#adv-out li{margin:2px 0;font-size:14px}
+.warn2{background:var(--warnbg);border:1px solid #f3d9a4;color:var(--warn);border-radius:10px;padding:7px 10px;font-size:12.5px;margin-top:8px}
+#inc-t th{background:#f6f8fd;font-size:12px;white-space:nowrap}#inc-t td{font-size:12.5px;white-space:nowrap}
+.prog{height:8px;background:var(--bd);border-radius:8px;overflow:hidden;margin-top:10px}.prog i{display:block;height:100%;width:0;background:var(--acc);transition:width .25s}
+.stg{font-weight:800;font-size:13px;margin:14px 0 4px;color:var(--pri)}
+.ck{display:flex;gap:10px;align-items:flex-start;padding:8px 2px;border-bottom:1px dashed var(--bd);font-size:14px;cursor:pointer}
+.ck input{width:20px;height:20px;margin-top:3px;flex:none;accent-color:#0e9f6e}
+.ck span small{display:block;color:var(--mut);font-size:12px;line-height:1.6}
+.ck.done span{text-decoration:line-through;color:var(--mut)}
+.lk2{display:block;text-decoration:none;color:var(--ink);background:#fff;border-radius:16px;padding:12px 14px;box-shadow:0 6px 20px rgba(16,28,58,.07)}
+.lk2 b{display:block;font-size:14.5px}.lk2 span{font-size:12.5px;color:var(--mut)}
+.ul{margin:8px 0 12px;padding-right:20px;font-size:14px}.ul li{margin:3px 0}
+
+.dchips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}.dchips::-webkit-scrollbar{display:none}
+.dc{flex:none;background:#f6f8fd;border:1.5px solid var(--bd);border-radius:14px;padding:6px 13px;font:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:right}
+.dc small{display:block;color:var(--mut);font-size:11px}.dc.on{border-color:var(--pri);background:var(--pri2);color:var(--pri);font-weight:600}
+.dc.new{border-style:dashed;color:var(--pri)}
+.dbtn{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.dbtn button{flex:1;min-width:120px}
+.btn.red{background:#fde8e8;color:#b42318}
+.ask{margin-right:auto;background:var(--pri2);color:var(--pri);border:0;border-radius:9px;padding:1px 9px;font:inherit;font-size:11.5px;cursor:pointer;flex:none}
+.addrow{display:flex;gap:8px;margin-top:12px}.addrow input{flex:1}
+.cust{color:var(--ink)}
+#dl-rep{width:100%;margin-top:8px;min-height:120px;font-size:12.5px}
+
+#inv-sheet{background:#fff;border:1px solid var(--bd);border-radius:10px;padding:16px;direction:ltr;text-align:left;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.55;color:#111}
+#inv-sheet h3{margin:0;font-size:20px;letter-spacing:1px;color:#0a1a4a}
+#inv-sheet .top{display:flex;justify-content:space-between;gap:12px;border-bottom:2px solid #0a1a4a;padding-bottom:10px;margin-bottom:10px}
+#inv-sheet img.lg{max-height:54px;max-width:140px;object-fit:contain}
+#inv-sheet table{width:100%;border-collapse:collapse;margin-top:10px}
+#inv-sheet th{background:#0a1a4a;color:#fff;text-align:left;padding:5px 6px;font-size:12px}
+#inv-sheet td{padding:5px 6px;border-bottom:1px solid #ddd;vertical-align:top}
+#inv-sheet td.r,#inv-sheet th.r{text-align:right}
+#inv-sheet .tot td{font-weight:700;border-bottom:0}
+#inv-sheet .kvs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+#inv-sheet .foot{margin-top:14px;font-size:10.5px;color:#666;border-top:1px solid #ddd;padding-top:6px}
+.irow{display:grid;grid-template-columns:3fr 1fr 1.3fr auto;gap:6px;margin-bottom:6px;align-items:center}
+.irow input{margin:0}
+.irow .x{background:#fde8e8;color:#b42318;border:0;border-radius:9px;padding:6px 10px;cursor:pointer;font:inherit}
+@media print{body *{visibility:hidden}#inv-sheet,#inv-sheet *{visibility:visible}#inv-sheet{position:absolute;left:0;top:0;width:100%;border:0}.bnav,.appbar{display:none}}
+</style>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0a1a4a">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+</head>
+<body>
+<div class="appbar"><div class="ab-in"><img class="logo" src="data:image/jpeg;base64,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" alt="Meta Commerce"><div><b id="ab-t">دستیار هوشمند بازرگانان</b><span id="ab-s">خانه</span></div></div></div>
+<div class="wrap">
+
+<!-- ============ خانه ============ -->
+<div class="pane on" id="p-home">
+ <button class="hero" data-go="adv" style="width:100%;border:0;font:inherit;text-align:right;cursor:pointer">
+  <div class="hero-i">🧭</div>
+  <div class="hero-t"><b>مشاور انتخاب اینکوترم</b><span>با چند سؤال ساده بفهمید کدام شرط تحویل برای معامله شما مناسب است</span></div>
+  <div class="hero-a"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></div>
+ </button>
+ <div class="sech">ابزارهای شما</div>
+ <div class="tiles">
+  <button class="tile" data-go="doc"><i style="background:#e6f7f0;color:#0e9f6e">✓</i><b>چک‌لیست مدارک</b><span>مدارک هر معامله، مرحله به مرحله</span></button>
+  <button class="tile" data-go="inv"><i style="background:#fff3df;color:#d97706">🧾</i><b>پیش‌فاکتور</b><span>ساخت و چاپ پیش‌فاکتور انگلیسی</span></button>
+  <button class="tile" data-go="fm"><i style="background:#e8efff;color:#1746d1">ƒ</i><b>ماشین‌حساب فرمولی</b><span>مثل اکسل، برای هر محاسبه شیپینگ</span></button>
+  <button class="tile" data-go="calc"><i style="background:#fff3df;color:#d97706">▦</i><b>ابزارهای آماده</b><span>حجم، قیمت تمام‌شده، سود، CIF</span></button>
+  <a class="tile" href="chambers/index.html"><i style="background:#f1e9ff;color:#7c3aed">⌂</i><b>اتاق‌های بازرگانی</b><span>لینک رسمی به تفکیک کشور</span></a>
+  <button class="tile" data-go="cons"><i style="background:#e0f4fb;color:#0891b2">☎</i><b>درخواست مشاوره</b><span>مشاوره بازرگانی و قراردادی</span></button>
+ </div>
+ <div class="brand"><img src="data:image/jpeg;base64,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" alt=""><div><b>ساخته‌شده توسط Meta Commerce</b><span>اطلاعات این برنامه راهنماست و جایگزین مشاوره رسمی بانکی، گمرکی و حقوقی نیست.</span></div></div>
+</div>
+
+<!-- ============ مشاور اینکوترم ============ -->
+<div class="pane" id="p-adv">
+ <div class="card"><h2>مشاور انتخاب اینکوترم ۲۰۲۰</h2>
+  <div class="note" style="margin:0 0 10px">به سه سؤال پاسخ دهید.</div>
+  <div class="q"><label>۱) نوع حمل</label><div class="opts" data-q="mode">
+    <button data-v="any" class="on">هر نوع حمل / کانتینری</button><button data-v="sea">فقط دریایی (کشتی، بندر به بندر)</button></div></div>
+  <div class="q"><label>۲) فروشنده تا کجا مسئول است؟</label><div class="opts" data-q="upto">
+    <button data-v="door">درب کارخانه، فروشنده فقط کالا را آماده می‌کند</button>
+    <button data-v="origin" class="on">تحویل به حمل‌کننده/کشتی در مبدأ</button>
+    <button data-v="paid">کرایه حمل تا مقصد با فروشنده، ولی ریسک در مبدأ منتقل شود</button>
+    <button data-v="dest">فروشنده تا مقصد، کالا را برساند</button></div></div>
+  <div class="q" id="q-ins"><label>۳) بیمه حمل را چه کسی می‌خرد؟</label><div class="opts" data-q="ins"><button data-v="no" class="on">خریدار یا لازم نیست</button><button data-v="yes">فروشنده بیمه کند</button></div></div>
+  <div class="q" id="q-imp" style="display:none"><label>۳) ترخیص و عوارض واردات با کیست؟</label><div class="opts" data-q="imp"><button data-v="buyer" class="on">خریدار</button><button data-v="seller">فروشنده (DDP)</button></div>
+   <label style="margin-top:8px">تخلیه کالا در مقصد با کیست؟</label><div class="opts" data-q="unl"><button data-v="buyer" class="on">خریدار</button><button data-v="seller">فروشنده</button></div></div>
+  <div class="res" id="adv-out"></div>
+  
+ </div>
+ <div class="card"><h2>مقایسه ۱۱ اینکوترم</h2><div style="overflow-x:auto"><table id="inc-t"></table></div>
+  <div class="note">جدول خلاصه است؛ برای قرارداد، متن رسمی ICC را ملاک قرار دهید.</div></div>
+</div>
+
+<!-- ============ مدارک ============ -->
+<div class="pane" id="p-doc">
+ <div class="card"><h2>معامله‌های من</h2>
+  <div class="dchips" id="dl-chips"></div>
+  <div id="dl-body"></div>
+ </div>
+ <a class="lk2" href="chambers/index.html"><b>🏛 منابع رسمی هر کشور</b><span>گواهی مبدأ و تأیید شرکت‌ها معمولاً از طریق اتاق بازرگانی همان کشور انجام می‌شود</span></a>
+</div>
+
+<!-- ============ پیش‌فاکتور ============ -->
+<div class="pane" id="p-inv">
+ <div class="card"><h2>ساخت پیش‌فاکتور (Proforma Invoice)</h2>
+  <div class="note" style="margin:0 0 8px">فرم را فارسی پر کنید؛ خروجی انگلیسی و آماده چاپ یا PDF است.</div>
+  <div class="grid">
+   <div><label>نام شرکت فروشنده</label><input id="i-sn" data-k class="ltr" placeholder="Seller company"></div>
+   <div><label>نشانی و تماس فروشنده</label><input id="i-sa" data-k class="ltr" placeholder="Address, phone, email"></div>
+   <div><label>نام خریدار</label><input id="i-bn" data-k class="ltr" placeholder="Buyer company"></div>
+   <div><label>نشانی خریدار</label><input id="i-ba" data-k class="ltr" placeholder="Address, country"></div>
+   <div><label>شماره پیش‌فاکتور</label><input id="i-no" data-k class="ltr"></div>
+   <div><label>تاریخ</label><input id="i-dt" data-k type="date"></div>
+   <div><label>ارز</label><select id="i-cur" data-k><option>USD</option><option>EUR</option><option>AED</option><option>OMR</option><option>AMD</option><option>IRR</option><option>GBP</option><option>CNY</option></select></div>
+   <div><label>اعتبار پیشنهاد (روز)</label><input id="i-val" data-k type="number" value="14"></div>
+   <div><label>شرط تحویل (اینکوترم)</label><select id="i-inc" data-k></select></div>
+   <div><label>محل مشخص تحویل</label><input id="i-pl" data-k class="ltr" placeholder="e.g. Shiraz"></div>
+   <div><label>شرایط پرداخت</label><input id="i-pay" data-k class="ltr" placeholder="e.g. 30% advance, 70% against B/L copy"></div>
+   <div><label>زمان تحویل</label><input id="i-lead" data-k class="ltr" placeholder="e.g. 20 days after payment"></div>
+  </div>
+  <div class="stg">اقلام</div>
+  <div id="i-items"></div>
+  <div class="row" style="margin-top:8px"><button class="btn ghost" id="i-add" style="width:auto">+ افزودن قلم</button></div>
+  <div class="grid" style="margin-top:10px">
+   <div><label>کرایه حمل (اختیاری)</label><input id="i-fr" data-k type="number" step="any" value="0"></div>
+   <div><label>بیمه (اختیاری)</label><input id="i-in" data-k type="number" step="any" value="0"></div>
+  </div>
+  <div class="grid" style="margin-top:8px"><div style="grid-column:1/-1"><label>توضیحات</label><input id="i-nt" data-k class="ltr" placeholder="Notes / bank details / validity"></div></div>
+  <div class="grid" style="margin-top:8px"><div><label>لوگوی شرکت شما (اختیاری)</label><input type="file" id="i-logo" accept="image/*"></div></div>
+  <div class="dbtn"><button class="btn" id="i-print">🖨 چاپ یا ذخیره PDF</button><button class="btn ghost" id="i-copy">📋 کپی متن</button></div>
+  <div class="note" id="i-msg">در بعضی مرورگرهای داخلی چاپ بسته است؛ در آن صورت از «کپی متن» استفاده کنید یا صفحه را در مرورگر باز کنید. اطلاعات فقط روی همین مرورگر ذخیره می‌شود.</div>
+ </div>
+ <div class="card"><h2>پیش‌نمایش</h2><div id="inv-sheet"></div></div>
+</div>
+
+<!-- ============ مشاوره ============ -->
+<div class="pane" id="p-cons">
+ <div class="card"><h2>درخواست مشاوره بازرگانی و قراردادی</h2>
+  <div style="font-size:14.5px">کارشناسان Meta Commerce در این موارد کنار شما هستند:</div>
+  <ul class="ul"><li>انتخاب شرط تحویل (اینکوترم) و تنظیم قرارداد فروش B2B</li><li>کنترل مراحل حمل از درب کارخانه تا انبار خریدار</li><li>هماهنگی با شرکت‌های ترید پارتنر و پیگیری مراسلات</li><li>ضمانت‌نامه بانکی و ساختار پرداخت در معاملات بین‌المللی</li></ul>
+  <a class="btn" style="display:block;text-align:center;text-decoration:none" href="https://www.metateam.am/contact.php" target="_blank" rel="noopener">ارتباط با Meta Commerce (metateam.am)</a>
+  <a class="btn ghost" style="display:block;text-align:center;text-decoration:none;margin-top:10px" href="https://www.metateam.am/contact.php" target="_blank" rel="noopener">💬 ارسال بازخورد درباره این برنامه</a>
+  <div class="note">این صفحه معرفی خدمات است. توضیح مشاوره‌ها راهنمای عمومی بازرگانی است و جایگزین مشاوره حقوقی رسمی نیست.</div>
+ </div>
+</div>
+
+<!-- ============ ماشین‌حساب فرمولی ============ -->
+<div class="pane" id="p-fm">
+ <div class="card"><h2>ماشین‌حساب فرمولی (مثل اکسل)</h2>
+  <div class="note" style="margin:0 0 8px">هر خط یک محاسبه است: <b class="ltr">نام = فرمول</b>. نام‌ها را در خط‌های بعدی صدا بزنید. خط‌هایی که با <b>#</b> شروع شوند توضیح‌اند.</div>
+  <div class="chips" id="fm-tpl"></div>
+  <textarea id="fm-in" class="ltr" spellcheck="false" rows="11"></textarea>
+  <div class="res" id="fm-out"></div>
+  <div class="note"><b>توابع:</b> SUM، AVERAGE، MIN، MAX، ROUND، ROUNDUP، ROUNDDOWN، CEILING، FLOOR، ABS، SQRT، POWER، MOD، IF، AND، OR، NOT، COUNT. عملگرها: + − * / ^ ٪ و مقایسه = &lt;&gt; &lt; &gt; &lt;= &gt;=. جداکننده آرگومان: کاما یا ;</div>
+ </div>
+</div>
+
+<!-- ============ ابزار محاسبه ============ -->
+<div class="pane" id="p-calc">
+ <button class="btn ghost" data-go="inv" style="width:100%;margin-bottom:8px">🧾 ساخت پیش‌فاکتور</button>
+ <button class="btn ghost" data-go="fm" style="width:100%;margin-bottom:12px">ƒ ماشین‌حساب فرمولی (مثل اکسل)</button>
+ <div class="card"><h2>۱) حجم، وزن و تعداد کانتینر</h2>
+  <div class="grid">
+   <div><label>طول کارتن (cm)</label><input type="number" id="v-l" value="60"></div>
+   <div><label>عرض (cm)</label><input type="number" id="v-w" value="40"></div>
+   <div><label>ارتفاع (cm)</label><input type="number" id="v-h" value="40"></div>
+   <div><label>وزن هر کارتن (kg)</label><input type="number" id="v-kg" value="18"></div>
+   <div><label>تعداد کارتن</label><input type="number" id="v-n" value="200"></div>
+  </div>
+  <div class="res" id="v-res"></div>
+  <div class="note">ظرفیت کانتینرها تقریبی است. ضریب هوایی ۶۰۰۰ سانتی‌متر مکعب بر کیلو (استاندارد رایج IATA) و دریایی ۱ تن = ۱ مترمکعب است؛ شرکت حمل ممکن است ضریب دیگری بدهد.</div>
+ </div>
+
+ <div class="card"><h2>۲) قیمت تمام‌شده کالا (Landed Cost)</h2>
+  <div class="grid">
+   <div><label>ارزش FOB کل</label><input type="number" id="l-fob" value="10000"></div>
+   <div><label>کرایه حمل</label><input type="number" id="l-fr" value="1200"></div>
+   <div><label>بیمه (٪ از CIF)</label><input type="number" id="l-ins" value="0.3" step="any"></div>
+   <div><label>حقوق گمرکی (٪)</label><input type="number" id="l-duty" value="10" step="any"></div>
+   <div><label>مالیات/عوارض (٪)</label><input type="number" id="l-vat" value="9" step="any"></div>
+   <div><label>سایر هزینه‌ها (بندر، ترخیص…)</label><input type="number" id="l-oth" value="500"></div>
+   <div><label>تعداد واحد</label><input type="number" id="l-qty" value="1000"></div>
+  </div>
+  <div class="res" id="l-res"></div>
+  <div class="note">همه مبالغ را به یک ارز وارد کنید. درصدها را با قوانین کشور مقصد جایگزین کنید.</div>
+ </div>
+
+ <div class="card"><h2>۳) سود و حاشیه</h2>
+  <div class="grid">
+   <div><label>بهای تمام‌شده هر واحد</label><input type="number" id="m-cost" value="12.5" step="any"></div>
+   <div><label>قیمت فروش هر واحد</label><input type="number" id="m-price" value="16" step="any"></div>
+   <div><label>حاشیه سود هدف (٪)</label><input type="number" id="m-tg" value="30" step="any"></div>
+  </div>
+  <div class="res" id="m-res"></div>
+ </div>
+
+ <div class="card"><h2>۴) تبدیل CFR به CIF (با بیمه)</h2>
+  <div class="grid">
+   <div><label>قیمت CFR</label><input type="number" id="c-cfr" value="10000"></div>
+   <div><label>نرخ بیمه (٪)</label><input type="number" id="c-r" value="0.3" step="any"></div>
+   <div><label>پوشش (٪ از CIF)</label><input type="number" id="c-p" value="110"></div>
+  </div>
+  <div class="res" id="c-res"></div>
+  <div class="note">فرمول: CIF = CFR ÷ (۱ − پوشش × نرخ بیمه). اینکوترمز ۲۰۲۰ برای CIF حداقل پوشش ۱۱۰٪ را پیش‌بینی کرده است.</div>
+ </div>
+</div>
+
+</div>
+<nav class="bnav" id="tabs">
+  <button data-t="home" class="on"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/></svg><span>خانه</span></button>
+  <button data-t="adv"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg><span>مشاور</span></button>
+  <button data-t="doc"><svg viewBox="0 0 24 24"><path d="M9 11l2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg><span>مدارک</span></button>
+  <button data-t="calc"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M12 12h2M8 16h2M12 16h2"/></svg><span>ابزارها</span></button>
+</nav>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const fmt = (n,d=2)=> (n===null||!isFinite(n))?"—":Number(n).toLocaleString("en-US",{maximumFractionDigits:d});
+
+/* ---------- تب‌ها ---------- */
+const TITLES={home:"خانه",adv:"مشاور انتخاب اینکوترم",doc:"چک‌لیست مدارک",inv:"پیش‌فاکتور",fm:"ماشین‌حساب فرمولی",calc:"ابزارهای آماده",cons:"درخواست مشاوره"};
+function go(t){
+  const hl=(t==="fm")?"calc":(t==="cons")?"home":(t==="inv")?"doc":t;document.querySelectorAll(".bnav button").forEach(b=>b.classList.toggle("on",b.dataset.t===hl));
+  document.querySelectorAll(".pane").forEach(p=>p.classList.toggle("on",p.id==="p-"+t));
+  $("ab-s").textContent=TITLES[t];window.scrollTo({top:0});
+}
+$("tabs").onclick=e=>{const b=e.target.closest("[data-t]");if(b)go(b.dataset.t)};
+document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g)go(g.dataset.go)});
+
+/* ---------- ماشین‌حساب فرمولی ---------- */
+const FN={
+ SUM:(...a)=>a.flat().reduce((x,y)=>x+y,0), AVERAGE:(...a)=>{a=a.flat();return a.reduce((x,y)=>x+y,0)/a.length},
+ MIN:(...a)=>Math.min(...a.flat()), MAX:(...a)=>Math.max(...a.flat()), COUNT:(...a)=>a.flat().length,
+ ROUND:(x,d=0)=>{const m=Math.pow(10,d);return Math.round((x+Number.EPSILON)*m)/m},
+ ROUNDUP:(x,d=0)=>{const m=Math.pow(10,d);return Math.sign(x)*Math.ceil(Math.abs(x)*m-1e-12)/m},
+ ROUNDDOWN:(x,d=0)=>{const m=Math.pow(10,d);return Math.sign(x)*Math.floor(Math.abs(x)*m+1e-12)/m},
+ CEILING:(x,s=1)=>Math.ceil(x/s-1e-12)*s, FLOOR:(x,s=1)=>Math.floor(x/s+1e-12)*s,
+ ABS:Math.abs, SQRT:Math.sqrt, POWER:Math.pow, MOD:(a,b)=>a-b*Math.floor(a/b),
+ IF:(c,a,b=0)=>c?a:b, AND:(...a)=>a.every(Boolean)?1:0, OR:(...a)=>a.some(Boolean)?1:0, NOT:a=>a?0:1
+};
+function fnum(s){return s.replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[،؛]/g,",").replace(/٫/g,".").replace(/٪/g,"%")}
+function calcExpr(src,scope){
+  const re=/\s*(?:(\d+\.?\d*|\.\d+)|([A-Za-z_؀-ۿ][A-Za-z0-9_؀-ۿ]*)|(<=|>=|<>|[-+*\/^%(),;<>=]))/y;
+  const T=[];let m;re.lastIndex=0;
+  while(re.lastIndex<src.trimEnd().length){const p=re.lastIndex;m=re.exec(src);if(!m)throw new Error("کاراکتر نامعتبر نزدیک «"+src.slice(p).trim().slice(0,6)+"»");
+    if(m[1]!==undefined)T.push({n:parseFloat(m[1])});else if(m[2])T.push({id:m[2].toLowerCase()});else T.push({op:m[3]==";"?",":m[3]})}
+  let i=0;const pk=()=>T[i],nx=()=>T[i++];
+  const isop=o=>pk()&&pk().op===o;
+  function cmp(){let a=add();while(pk()&&["=","<>","<",">","<=",">="].includes(pk().op)){const o=nx().op,b=add();a=({"=":a===b,"<>":a!==b,"<":a<b,">":a>b,"<=":a<=b,">=":a>=b}[o])?1:0}return a}
+  function add(){let a=mul();while(isop("+")||isop("-")){const o=nx().op,b=mul();a=o==="+"?a+b:a-b}return a}
+  function mul(){let a=pow();while(isop("*")||isop("/")){const o=nx().op,b=pow();if(o==="/"&&b===0)throw new Error("تقسیم بر صفر");a=o==="*"?a*b:a/b}return a}
+  function pow(){let a=un();if(isop("^")){nx();a=Math.pow(a,pow())}return a}
+  function un(){if(isop("-")){nx();return -un()}if(isop("+")){nx();return un()}return post()}
+  function post(){let a=prim();while(isop("%")){nx();a=a/100}return a}
+  function prim(){const t=nx();if(!t)throw new Error("عبارت ناتمام است");
+    if(t.n!==undefined)return t.n;
+    if(t.op==="("){const v=cmp();if(!isop(")"))throw new Error("پرانتز بسته نشده");nx();return v}
+    if(t.id){ if(isop("(")){nx();const args=[];if(!isop(")")){do{args.push(cmp())}while(isop(",")&&nx())}
+        if(!isop(")"))throw new Error("پرانتز تابع بسته نشده");nx();const f=FN[t.id.toUpperCase()];if(!f)throw new Error("تابع ناشناخته: "+t.id.toUpperCase());return f(...args)}
+      if(!(t.id in scope))throw new Error("نام تعریف نشده: "+t.id);return scope[t.id]}
+    throw new Error("ساختار نامعتبر")}
+  const v=cmp();if(i<T.length)throw new Error("عبارت اضافه در انتها");
+  if(!isFinite(v))throw new Error("نتیجه نامعتبر");return v;
+}
+const TPL={
+ "قیمت تمام‌شده":`# هزینه‌ها به یک ارز
+fob = 10000
+freight = 1200
+insurance = (fob + freight) * 0.3%
+cif = fob + freight + insurance
+duty = cif * 10%
+vat = (cif + duty) * 9%
+other = 500
+total = cif + duty + vat + other
+qty = 1000
+unit_cost = ROUND(total / qty, 3)`,
+ "حجم و CBM":`# ابعاد به سانتی‌متر
+L = 60
+W = 40
+H = 40
+cartons = 200
+kg_per_carton = 18
+cbm = ROUND(L * W * H / 1000000 * cartons, 3)
+gross_kg = kg_per_carton * cartons
+air_vol_kg = L * W * H / 6000 * cartons
+air_chargeable = MAX(gross_kg, air_vol_kg)
+sea_units = MAX(cbm, gross_kg / 1000)`,
+ "تبدیل ارز دستی":`# نرخ را خودتان بگذارید
+rate_usd_to_amd = 390
+usd = 5000
+amd = usd * rate_usd_to_amd
+back_to_usd = amd / rate_usd_to_amd`,
+ "حاشیه سود":`cost = 12.5
+price = 16
+profit = price - cost
+margin_pct = ROUND(profit / price * 100, 2)
+markup_pct = ROUND(profit / cost * 100, 2)
+price_for_30 = ROUND(cost / (1 - 30%), 3)`,
+ "کرایه با شرط":`# اگر وزن بیشتر از ۵۰۰ کیلو بود نرخ ارزان‌تر
+kg = 620
+rate_low = 2.1
+rate_high = 2.6
+rate = IF(kg > 500, rate_low, rate_high)
+freight = kg * rate
+min_charge = 150
+payable = MAX(freight, min_charge)`
+};
+function runFm(){
+  const lines=$("fm-in").value.split("\n"),scope={},rows=[];let last=null;
+  lines.forEach((raw,ix)=>{
+    const s=fnum(raw).trim();if(!s||s[0]==="#")return;
+    const m=s.match(/^([A-Za-z_؀-ۿ][A-Za-z0-9_؀-ۿ]*)\s*=(?!=)\s*(.+)$/);
+    const name=m?m[1].toLowerCase():null,expr=m?m[2]:s;
+    try{const v=calcExpr(expr,scope);if(name)scope[name]=v;last=v;rows.push({k:m?m[1]:`خط ${ix+1}`,v})}
+    catch(e){rows.push({k:m?m[1]:`خط ${ix+1}`,err:e.message})}
+  });
+  if(!rows.length){$("fm-out").innerHTML="یک فرمول بنویسید.";return}
+  $("fm-out").innerHTML=rows.map(r=>r.err?`<div class="kv" style="color:#b42318"><span>${esc(r.k)}</span><b style="direction:rtl">⚠ ${esc(r.err)}</b></div>`:`<div class="kv"><span>${esc(r.k)}</span><b>${fmt(r.v,6)}</b></div>`).join("");
+}
+$("fm-tpl").innerHTML=Object.keys(TPL).map(k=>`<span class="chip" data-k="${k}">${k}</span>`).join("");
+$("fm-tpl").onclick=e=>{const k=e.target.dataset.k;if(k){$("fm-in").value=TPL[k];runFm()}};
+$("fm-in").oninput=runFm;$("fm-in").value=TPL["قیمت تمام‌شده"];runFm();
+
+/* ---------- ابزارها ---------- */
+const num=id=>parseFloat($(id).value)||0;
+function vol(){
+  const l=num("v-l"),w=num("v-w"),h=num("v-h"),kg=num("v-kg"),n=num("v-n");
+  const cbm1=l*w*h/1e6, cbm=cbm1*n, gw=kg*n, vw=l*w*h/6000*n, air=Math.max(gw,vw), wm=Math.max(cbm,gw/1000);
+  const c20=cbm/28, c40=cbm/58; // ظرفیت عملی تقریبی (~85٪ ظرفیت اسمی ۳۳ و ۶۷)
+  $("v-res").innerHTML=`<div class="kv"><span>حجم کل</span><b>${fmt(cbm,3)} CBM</b></div>
+  <div class="kv"><span>وزن ناخالص کل</span><b>${fmt(gw)} kg</b></div>
+  <div class="kv"><span>وزن حجمی هوایی</span><b>${fmt(vw)} kg</b></div>
+  <div class="kv"><span>وزن قابل‌محاسبه هوایی</span><b>${fmt(air)} kg</b></div>
+  <div class="kv"><span>واحد قابل‌محاسبه دریایی (W/M)</span><b>${fmt(wm,3)}</b></div>
+  <div class="kv"><span>کانتینر ۲۰ فوت (تقریبی)</span><b>${fmt(c20,2)}</b></div>
+  <div class="kv"><span>کانتینر ۴۰ فوت (تقریبی)</span><b>${fmt(c40,2)}</b></div>`;
+}
+function landed(){
+  const fob=num("l-fob"),fr=num("l-fr"),ins=num("l-ins")/100,duty=num("l-duty")/100,vat=num("l-vat")/100,oth=num("l-oth"),q=num("l-qty");
+  const insur=(fob+fr)*ins, cif=fob+fr+insur, d=cif*duty, v=(cif+d)*vat, tot=cif+d+v+oth;
+  $("l-res").innerHTML=`<div class="kv"><span>CIF</span><b>${fmt(cif)}</b></div>
+  <div class="kv"><span>حقوق گمرکی</span><b>${fmt(d)}</b></div>
+  <div class="kv"><span>مالیات/عوارض</span><b>${fmt(v)}</b></div>
+  <div class="kv"><span>سایر هزینه‌ها</span><b>${fmt(oth)}</b></div>
+  <div class="kv"><span><b>قیمت تمام‌شده کل</b></span><b>${fmt(tot)}</b></div>
+  <div class="kv"><span>قیمت تمام‌شده هر واحد</span><b>${q>0?fmt(tot/q,4):"—"}</b></div>
+  <div class="kv"><span>ضریب نسبت به FOB</span><b>${fob>0?fmt(tot/fob,3)+"×":"—"}</b></div>`;
+}
+function margin(){
+  const c=num("m-cost"),p=num("m-price"),t=num("m-tg")/100, pr=p-c;
+  $("m-res").innerHTML=`<div class="kv"><span>سود هر واحد</span><b>${fmt(pr,4)}</b></div>
+  <div class="kv"><span>حاشیه سود (از قیمت فروش)</span><b>${p>0?fmt(pr/p*100)+"٪":"—"}</b></div>
+  <div class="kv"><span>سود نسبت به بها (Markup)</span><b>${c>0?fmt(pr/c*100)+"٪":"—"}</b></div>
+  <div class="kv"><span>قیمت فروش لازم برای حاشیه هدف</span><b>${t<1?fmt(c/(1-t),4):"—"}</b></div>`;
+}
+function cif(){
+  const cfr=num("c-cfr"),r=num("c-r")/100,p=num("c-p")/100,den=1-p*r, v=den>0?cfr/den:null;
+  $("c-res").innerHTML=`<div class="kv"><span>CIF</span><b>${fmt(v)}</b></div><div class="kv"><span>هزینه بیمه</span><b>${v===null?"—":fmt(v-cfr)}</b></div>`;
+}
+document.querySelectorAll("#p-calc input").forEach(i=>i.oninput=()=>{vol();landed();margin();cif()});
+vol();landed();margin();cif();
+
+/* ---------- مشاور اینکوترم ---------- */
+const INC={
+ EXW:{n:"Ex Works",r:"درب فروشنده",fr:"خریدار",ins:"—",ex:"خریدار",im:"خریدار"},
+ FCA:{n:"Free Carrier",r:"تحویل به حمل‌کننده خریدار",fr:"خریدار",ins:"—",ex:"فروشنده",im:"خریدار"},
+ CPT:{n:"Carriage Paid To",r:"تحویل به اولین حمل‌کننده",fr:"فروشنده",ins:"—",ex:"فروشنده",im:"خریدار"},
+ CIP:{n:"Carriage & Insurance Paid To",r:"تحویل به اولین حمل‌کننده",fr:"فروشنده",ins:"فروشنده (پوشش A)",ex:"فروشنده",im:"خریدار"},
+ DAP:{n:"Delivered at Place",r:"مقصد، آماده تخلیه",fr:"فروشنده",ins:"—",ex:"فروشنده",im:"خریدار"},
+ DPU:{n:"Delivered at Place Unloaded",r:"مقصد، پس از تخلیه",fr:"فروشنده",ins:"—",ex:"فروشنده",im:"خریدار"},
+ DDP:{n:"Delivered Duty Paid",r:"مقصد، با ترخیص واردات",fr:"فروشنده",ins:"—",ex:"فروشنده",im:"فروشنده"},
+ FAS:{n:"Free Alongside Ship",r:"کنار کشتی در بندر مبدأ",fr:"خریدار",ins:"—",ex:"فروشنده",im:"خریدار"},
+ FOB:{n:"Free On Board",r:"روی کشتی در بندر مبدأ",fr:"خریدار",ins:"—",ex:"فروشنده",im:"خریدار"},
+ CFR:{n:"Cost and Freight",r:"روی کشتی در بندر مبدأ",fr:"فروشنده",ins:"—",ex:"فروشنده",im:"خریدار"},
+ CIF:{n:"Cost, Insurance & Freight",r:"روی کشتی در بندر مبدأ",fr:"فروشنده",ins:"فروشنده (پوشش C)",ex:"فروشنده",im:"خریدار"}
+};
+$("inc-t").innerHTML="<tr><th>شرط</th><th>انتقال ریسک</th><th>کرایه</th><th>بیمه</th><th>ترخیص صادرات</th><th>ترخیص واردات</th></tr>"+Object.keys(INC).map(k=>{const x=INC[k];return `<tr><td><b class="ltr">${k}</b></td><td>${x.r}</td><td>${x.fr}</td><td>${x.ins}</td><td>${x.ex}</td><td>${x.im}</td></tr>`}).join("");
+const A={mode:"any",upto:"origin",ins:"no",imp:"buyer",unl:"buyer"};
+function advise(){
+  const sea=A.mode==="sea";let k,notes=[];
+  if(A.upto==="door"){k="EXW";notes.push("در EXW ترخیص صادراتی و بارگیری هم با خریدار است؛ اگر می‌خواهید فروشنده صادرات را ترخیص کند، FCA بهتر است.")}
+  else if(A.upto==="origin"){k=sea?"FOB":"FCA";if(sea)notes.push("اگر کالا کانتینری است، ICC استفاده از FCA را به‌جای FOB توصیه می‌کند.");else notes.push("در FCA فروشنده صادرات را ترخیص و کالا را به حمل‌کننده خریدار تحویل می‌دهد.")}
+  else if(A.upto==="paid"){if(A.ins==="yes")k=sea?"CIF":"CIP";else k=sea?"CFR":"CPT";notes.push("ریسک در مبدأ منتقل می‌شود، ولی فروشنده هزینه حمل تا مقصد را می‌پردازد.");if(k==="CIF"||k==="CIP")notes.push(k==="CIP"?"در CIP (۲۰۲۰) حداقل پوشش بیمه نوع A است.":"در CIF حداقل پوشش بیمه نوع C است.")}
+  else{k=A.imp==="seller"?"DDP":(A.unl==="seller"?"DPU":"DAP");notes.push(k==="DDP"?"در DDP فروشنده ترخیص، حقوق گمرکی و مالیات واردات را هم می‌پردازد؛ ریسک و هزینه او بیشترین است.":k==="DPU"?"در DPU فروشنده مسئول تخلیه در مقصد است.":"در DAP کالا آماده تخلیه در مقصد تحویل می‌شود و ترخیص واردات با خریدار است.");if(sea&&A.upto==="dest")notes.push("این شرط‌ها برای هر نوع حمل‌اند و حمل دریایی را هم پوشش می‌دهند.")}
+  const x=INC[k];
+  $("adv-out").innerHTML=`<div>پیشنهاد:</div><div class="tag">${k}</div> <b class="ltr">${x.n}</b>
+  <ul><li>انتقال ریسک: <b>${x.r}</b></li><li>کرایه حمل اصلی: <b>${x.fr}</b></li><li>بیمه: <b>${x.ins}</b></li><li>ترخیص صادرات: <b>${x.ex}</b></li><li>ترخیص واردات: <b>${x.im}</b></li></ul>`+notes.map(n=>`<div class="warn2">${esc(n)}</div>`).join("")+`<div class="note">محل دقیق تحویل را حتماً در قرارداد بنویسید، مثلاً «${k} Shiraz».</div>`;
+  $("q-ins").style.display=A.upto==="paid"?"":"none";
+  $("q-imp").style.display=A.upto==="dest"?"":"none";
+  window._advK=k;
+}
+document.querySelectorAll("#p-adv .opts").forEach(g=>g.onclick=e=>{const b=e.target.closest("button");if(!b)return;g.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));A[g.dataset.q]=b.dataset.v;advise()});
+
+advise();
+
+/* ---------- چک‌لیست مدارک (چند معامله) ---------- */
+function docsFor(dir,mode){
+  const tr={sea:["بارنامه دریایی (Bill of Lading)","سند حمل اصلی؛ در بیشتر موارد مالکیت کالا را نشان می‌دهد"],air:["بارنامه هوایی (AWB)","سند حمل هوایی؛ قابل معامله نیست"],road:["بارنامه جاده‌ای (CMR یا مشابه)","سند حمل جاده‌ای"]}[mode];
+  return [
+   ["۱) قبل از قرارداد",[["بررسی طرف معامله","ثبت شرکت و سابقه؛ نشانی اتاق بازرگانی کشور مقابل در بخش منابع",0],["پیش‌فاکتور (Proforma Invoice)","قیمت، شرط تحویل (اینکوترم)، شرایط پرداخت",0],["قرارداد فروش (Sales Contract)","شرایط، ضمانت، حل اختلاف",1]]],
+   ["۲) پرداخت و تضمین",[["ترتیبات پرداخت","اعتبار اسنادی، حواله یا ضمانت‌نامه بانکی طبق قرارداد",1]]],
+   ["۳) آماده‌سازی و حمل",[["فاکتور تجاری (Commercial Invoice)","مبنای ترخیص و پرداخت",0],["لیست بسته‌بندی (Packing List)","تعداد، وزن و ابعاد بسته‌ها",0],[tr[0],tr[1],0],["گواهی مبدأ (Certificate of Origin)","معمولاً با تأیید اتاق بازرگانی؛ در صورت نیاز کشور مقصد",0],["بیمه‌نامه حمل","اگر شرط تحویل ایجاب کند یا خودتان بخواهید",0],["گواهی بازرسی/کیفیت","در صورت نیاز قرارداد یا مقررات کالا",0]]],
+   ["۴) ترخیص و تحویل",[[dir==="exp"?"اظهارنامه صادراتی":"اظهارنامه واردات","طبق گمرک کشور مربوط",1],["مجوزها و استانداردها","بسته به نوع کالا؛ از مراجع رسمی استعلام کنید",1],["رسید تحویل در مقصد","پایان مسئولیت و مبنای تسویه نهایی",0]]]
+  ];
+}
+const MODE_FA={sea:"دریایی",air:"هوایی",road:"جاده‌ای"},DIR_FA={exp:"صادرات",imp:"واردات"};
+let deals=[],actId=null,delArm=false;
+try{deals=JSON.parse(localStorage.getItem("deals_v1")||"[]");actId=localStorage.getItem("deals_act")}catch(e){deals=[]}
+const saveD=()=>{try{localStorage.setItem("deals_v1",JSON.stringify(deals));localStorage.setItem("deals_act",actId||"")}catch(e){}};
+function mkDeal(){const d={id:"d"+Date.now().toString(36),name:"معامله "+(deals.length+1),dir:"exp",mode:"sea",ck:{},cu:[]};deals.push(d);actId=d.id;saveD()}
+if(!deals.length)mkDeal();
+const cur=()=>deals.find(d=>d.id===actId)||deals[0];
+function stats(d){let tot=0,done=0;docsFor(d.dir,d.mode).forEach(s=>s[1].forEach(i=>{tot++;if(d.ck[i[0]])done++}));d.cu.forEach(c=>{tot++;if(c.done)done++});return {tot,done}}
+function renderDeals(){
+  const d=cur();actId=d.id;
+  $("dl-chips").innerHTML=deals.map(x=>{const s=stats(x);return `<button class="dc ${x.id===d.id?"on":""}" data-id="${x.id}">${esc(x.name)}<small>${DIR_FA[x.dir]} · ${s.done}/${s.tot}</small></button>`}).join("")+'<button class="dc new" data-new="1">+ معامله جدید</button>';
+  const s=stats(d);let h=`<div class="grid" style="margin-top:6px"><div><label>نام معامله</label><input id="dn" value="${esc(d.name)}"></div>
+   <div><label>نوع</label><select id="dd"><option value="exp" ${d.dir==="exp"?"selected":""}>صادرات</option><option value="imp" ${d.dir==="imp"?"selected":""}>واردات</option></select></div>
+   <div><label>حمل</label><select id="dm">${Object.keys(MODE_FA).map(k=>`<option value="${k}" ${d.mode===k?"selected":""}>${MODE_FA[k]}</option>`).join("")}</select></div></div>
+   <div class="prog"><i style="width:${s.tot?Math.round(s.done/s.tot*100):0}%"></i></div><div class="note" style="margin:4px 0 0">${s.done} از ${s.tot} مورد انجام شده</div>`;
+  docsFor(d.dir,d.mode).forEach(([st,items])=>{h+=`<div class="stg">${st}</div>`;items.forEach(([n,ds,ex])=>{const on=!!d.ck[n];h+=`<div class="ck ${on?"done":""}"><input type="checkbox" data-n="${esc(n)}" ${on?"checked":""}><span>${esc(n)}<small>${esc(ds)}</small></span>${ex?'<button class="ask" data-go="cons">مشاوره</button>':""}</div>`})});
+  h+=`<div class="stg">۵) مدارک اضافه (خودتان)</div>`+d.cu.map((c,i)=>`<div class="ck ${c.done?"done":""}"><input type="checkbox" data-ci="${i}" ${c.done?"checked":""}><span class="cust">${esc(c.n)}</span><button class="ask" data-cdel="${i}" style="background:#fde8e8;color:#b42318">حذف</button></div>`).join("");
+  h+=`<div class="addrow"><input id="cn" placeholder="مثلاً گواهی بهداشت"><button class="btn" id="cadd" style="width:auto">افزودن</button></div>
+   <div class="dbtn"><button class="btn ghost" id="drep">📋 گزارش برای ارسال</button><button class="btn red" id="ddel">${delArm?"برای حذف دوباره بزنید":"حذف این معامله"}</button></div><textarea id="dl-rep" style="display:none" readonly></textarea>
+   <div class="note">فهرست عمومی است؛ مدارک دقیق به کالا، کشور و قوانین روز بستگی دارد. اطلاعات فقط روی همین مرورگر ذخیره می‌شود.</div>`;
+  $("dl-body").innerHTML=h;
+}
+$("dl-chips").onclick=e=>{const b=e.target.closest("button");if(!b)return;if(b.dataset.new){mkDeal()}else{actId=b.dataset.id}delArm=false;saveD();renderDeals()};
+$("dl-body").addEventListener("change",e=>{const d=cur(),i=e.target;
+  if(i.id==="dd"){d.dir=i.value}else if(i.id==="dm"){d.mode=i.value}
+  else if(i.id==="dn"){d.name=i.value.trim()||d.name}
+  else if(i.dataset.n){d.ck[i.dataset.n]=i.checked}
+  else if(i.dataset.ci!==undefined){d.cu[+i.dataset.ci].done=i.checked}
+  else return;saveD();renderDeals()});
+$("dl-body").addEventListener("click",e=>{const d=cur();
+  if(e.target.id==="cadd"){const v=$("cn").value.trim();if(v){d.cu.push({n:v,done:false});saveD();renderDeals()}}
+  else if(e.target.dataset.cdel!==undefined){d.cu.splice(+e.target.dataset.cdel,1);saveD();renderDeals()}
+  else if(e.target.id==="ddel"){if(!delArm){delArm=true;renderDeals();return}deals=deals.filter(x=>x.id!==d.id);delArm=false;if(!deals.length)mkDeal();actId=deals[0].id;saveD();renderDeals()}
+  else if(e.target.id==="drep"){
+    const s=stats(d),done=[],todo=[];docsFor(d.dir,d.mode).forEach(st=>st[1].forEach(i=>(d.ck[i[0]]?done:todo).push(i[0])));d.cu.forEach(c=>(c.done?done:todo).push(c.n));
+    const txt=`گزارش مدارک معامله «${d.name}»\nنوع: ${DIR_FA[d.dir]} · حمل ${MODE_FA[d.mode]}\nپیشرفت: ${s.done} از ${s.tot}\n\nانجام‌شده:\n${done.map(x=>"✓ "+x).join("\n")||"—"}\n\nباقی‌مانده:\n${todo.map(x=>"○ "+x).join("\n")||"—"}\n\nتهیه‌شده با دستیار هوشمند بازرگانان، Meta Commerce`;
+    const ta=$("dl-rep");ta.value=txt;ta.style.display="block";ta.select();
+    try{navigator.clipboard.writeText(txt).then(()=>{e.target.textContent="✓ کپی شد"},()=>{})}catch(_){}}
+});
+renderDeals();
+
+
+/* ---------- پیش‌فاکتور ---------- */
+(function(){
+  const FIELDS=["i-sn","i-sa","i-bn","i-ba","i-no","i-dt","i-cur","i-val","i-inc","i-pl","i-pay","i-lead","i-fr","i-in","i-nt"];
+  $("i-inc").innerHTML=["EXW","FCA","CPT","CIP","DAP","DPU","DDP","FAS","FOB","CFR","CIF"].map(k=>`<option>${k}</option>`).join("");
+  let st={items:[{d:"",q:1,p:0}],logo:""};
+  try{const s=JSON.parse(localStorage.getItem("inv_v1")||"null");if(s)st=Object.assign(st,s)}catch(e){}
+  const today=()=>new Date().toISOString().slice(0,10);
+  const save=()=>{const o={items:st.items,logo:st.logo};FIELDS.forEach(i=>o[i]=$(i).value);try{localStorage.setItem("inv_v1",JSON.stringify(o))}catch(e){}};
+  FIELDS.forEach(i=>{if(st[i]!==undefined)$(i).value=st[i]});
+  if(!$("i-dt").value)$("i-dt").value=today();
+  if(!$("i-no").value)$("i-no").value="PI-"+today().replace(/-/g,"")+"-001";
+  const n2=x=>(Number(x)||0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+  function items(){
+    $("i-items").innerHTML=st.items.map((it,i)=>`<div class="irow"><input class="ltr" data-i="${i}" data-f="d" placeholder="Description" value="${esc(it.d)}"><input type="number" data-i="${i}" data-f="q" step="any" value="${it.q}"><input type="number" data-i="${i}" data-f="p" step="any" value="${it.p}"><button class="x" data-del="${i}">✕</button></div>`).join("");
+  }
+  function sheet(){
+    const v=id=>$(id).value, cur=v("i-cur"), rows=st.items.filter(x=>x.d||x.p);
+    const sub=rows.reduce((a,x)=>a+(Number(x.q)||0)*(Number(x.p)||0),0),fr=Number(v("i-fr"))||0,ins=Number(v("i-in"))||0,tot=sub+fr+ins;
+    const exp=new Date(v("i-dt")||today());exp.setDate(exp.getDate()+(parseInt(v("i-val"))||0));
+    const place=(v("i-inc")+" "+v("i-pl")).trim();
+    $("inv-sheet").innerHTML=`<div class="top"><div>${st.logo?`<img class="lg" src="${st.logo}" alt="">`:""}<div style="font-weight:700;font-size:15px">${esc(v("i-sn")||"Seller company")}</div><div>${esc(v("i-sa"))}</div></div>
+     <div style="text-align:right"><h3>PROFORMA INVOICE</h3><div>No: <b>${esc(v("i-no"))}</b></div><div>Date: ${esc(v("i-dt"))}</div><div>Valid until: ${isNaN(exp)?"":exp.toISOString().slice(0,10)}</div></div></div>
+     <div><b>Bill to:</b> ${esc(v("i-bn")||"—")}<br>${esc(v("i-ba"))}</div>
+     <table><tr><th>#</th><th>Description</th><th class="r">Qty</th><th class="r">Unit price (${esc(cur)})</th><th class="r">Amount (${esc(cur)})</th></tr>
+     ${rows.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.d)}</td><td class="r">${n2(x.q)}</td><td class="r">${n2(x.p)}</td><td class="r">${n2((Number(x.q)||0)*(Number(x.p)||0))}</td></tr>`).join("")||'<tr><td colspan="5">—</td></tr>'}
+     <tr class="tot"><td colspan="4" class="r">Subtotal</td><td class="r">${n2(sub)}</td></tr>
+     ${fr?`<tr class="tot"><td colspan="4" class="r">Freight</td><td class="r">${n2(fr)}</td></tr>`:""}${ins?`<tr class="tot"><td colspan="4" class="r">Insurance</td><td class="r">${n2(ins)}</td></tr>`:""}
+     <tr class="tot"><td colspan="4" class="r">TOTAL (${esc(cur)})</td><td class="r">${n2(tot)}</td></tr></table>
+     <div class="kvs"><div><b>Terms of delivery:</b> ${esc(place)} (Incoterms® 2020)</div><div><b>Terms of payment:</b> ${esc(v("i-pay")||"—")}</div><div><b>Lead time:</b> ${esc(v("i-lead")||"—")}</div></div>
+     ${v("i-nt")?`<div style="margin-top:8px"><b>Notes:</b> ${esc(v("i-nt"))}</div>`:""}
+     <div class="foot">This proforma invoice is an offer and not a tax invoice. Prepared with Trader Assistant by Meta Commerce.</div>`;
+    return {rows,sub,fr,ins,tot,cur,place,exp};
+  }
+  function all(){items();const r=sheet();save();return r}
+  document.querySelectorAll("#p-inv [data-k]").forEach(e=>e.oninput=e.onchange=()=>{sheet();save()});
+  $("i-items").addEventListener("input",e=>{const i=e.target.dataset.i;if(i===undefined)return;const f=e.target.dataset.f;st.items[i][f]=f==="d"?e.target.value:parseFloat(e.target.value)||0;sheet();save()});
+  $("i-items").addEventListener("click",e=>{const d=e.target.dataset.del;if(d===undefined)return;st.items.splice(+d,1);if(!st.items.length)st.items.push({d:"",q:1,p:0});all()});
+  $("i-add").onclick=()=>{st.items.push({d:"",q:1,p:0});all()};
+  $("i-logo").onchange=e=>{const f=e.target.files[0];if(!f)return;const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const c=document.createElement("canvas"),r=Math.min(1,240/im.width);c.width=im.width*r;c.height=im.height*r;c.getContext("2d").drawImage(im,0,0,c.width,c.height);st.logo=c.toDataURL("image/png");URL.revokeObjectURL(u);all()};im.src=u};
+  $("i-print").onclick=()=>{try{window.print()}catch(e){$("i-msg").textContent="چاپ در این مرورگر ممکن نیست؛ از «کپی متن» استفاده کنید."}};
+  $("i-copy").onclick=async()=>{const r=all(),v=id=>$(id).value;
+    const txt=`PROFORMA INVOICE ${v("i-no")}\nDate: ${v("i-dt")}\nSeller: ${v("i-sn")} ${v("i-sa")}\nBuyer: ${v("i-bn")} ${v("i-ba")}\n\n`+r.rows.map((x,i)=>`${i+1}. ${x.d} | ${n2(x.q)} x ${n2(x.p)} = ${n2((Number(x.q)||0)*(Number(x.p)||0))} ${r.cur}`).join("\n")+`\n\nSubtotal: ${n2(r.sub)} ${r.cur}`+(r.fr?`\nFreight: ${n2(r.fr)}`:"")+(r.ins?`\nInsurance: ${n2(r.ins)}`:"")+`\nTOTAL: ${n2(r.tot)} ${r.cur}\n\nDelivery: ${r.place} (Incoterms 2020)\nPayment: ${v("i-pay")}\nLead time: ${v("i-lead")}\n${v("i-nt")}`;
+    try{await navigator.clipboard.writeText(txt);$("i-msg").textContent="✓ متن کپی شد."}catch(e){$("i-msg").textContent="کپی خودکار ممکن نشد."}};
+  all();
+})();
+</script>
+<script>if("serviceWorker" in navigator && /^https?:/.test(location.protocol)){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}</script>
+</body>
+</html>

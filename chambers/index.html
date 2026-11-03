@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>اتاق‌های بازرگانی جهان</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f5fa;--card:#fff;--ink:#101c3a;--mut:#6a758f;--pri:#1746d1;--pri2:#e8efff;--bd:#e3e8f2;--gold:#f5a524;--sh:0 6px 20px rgba(16,28,58,.08)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Vazirmatn,Tahoma,sans-serif;line-height:1.85;font-size:15px;padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+.bar{position:sticky;top:0;z-index:5;background:linear-gradient(135deg,#0a1a4a,#1746d1);color:#fff;padding:calc(14px + env(safe-area-inset-top)) 16px 16px;box-shadow:0 4px 18px rgba(10,26,74,.3)}
+.bar .top{display:flex;align-items:center;gap:10px}
+.back{color:#fff;text-decoration:none;background:rgba(255,255,255,.16);border-radius:12px;padding:5px 12px;font-size:13px;font-weight:600}
+.bar h1{margin:0;font-size:18px;font-weight:800;flex:1}
+.sbox{margin-top:12px;position:relative}
+.sbox input{width:100%;border:0;border-radius:14px;padding:11px 42px 11px 14px;font:inherit;font-size:15px;background:#fff;color:var(--ink);outline:0}
+.sbox svg{position:absolute;right:13px;top:50%;transform:translateY(-50%);width:19px;height:19px;stroke:#6a758f;fill:none;stroke-width:2}
+.wrap{max-width:760px;margin:0 auto;padding:0 14px}
+.scroll{display:flex;gap:8px;overflow-x:auto;padding:14px 14px 6px;margin:0 -14px;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+.cc{flex:none;display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--bd);border-radius:22px;padding:5px 14px;font:inherit;font-size:13.5px;color:var(--ink);cursor:pointer;font-weight:600}
+.cc.on{background:var(--pri);border-color:var(--pri);color:#fff}
+.cc .n{font-size:11px;opacity:.7;font-weight:400}
+.sec{display:flex;justify-content:space-between;align-items:center;margin:14px 2px 6px;font-weight:800;font-size:14px}
+.sec small{color:var(--mut);font-weight:400}
+.item{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:16px;padding:12px;margin-bottom:10px;box-shadow:var(--sh);text-decoration:none;color:var(--ink)}
+.flag{width:46px;height:46px;border-radius:14px;background:var(--pri2);display:flex;align-items:center;justify-content:center;font-size:24px;flex:none}
+.item .t{flex:1;min-width:0}
+.item b{display:block;font-size:14.5px;line-height:1.5}
+.item span{font-size:12px;color:var(--mut);display:block;direction:ltr;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.go{width:34px;height:34px;border-radius:50%;background:var(--pri2);display:flex;align-items:center;justify-content:center;flex:none}
+.go svg{width:16px;height:16px;stroke:var(--pri);fill:none;stroke-width:2.4}
+.star{background:none;border:0;font-size:22px;cursor:pointer;color:#c3cada;padding:4px;flex:none}
+.star.on{color:var(--gold)}
+.empty{text-align:center;color:var(--mut);padding:28px 8px}
+.card{background:var(--card);border-radius:16px;padding:14px;box-shadow:var(--sh);margin-top:16px}
+.card h2{margin:0 0 8px;font-size:15px}
+label{display:block;font-size:12.5px;color:var(--mut);margin-bottom:2px}
+.fi{width:100%;border:1px solid var(--bd);border-radius:12px;padding:9px 11px;font:inherit;background:#fbfcff;color:var(--ink);margin-bottom:8px}
+.ltr{direction:ltr;text-align:left}
+.btn{background:var(--pri);color:#fff;border:0;border-radius:12px;padding:10px 20px;font:inherit;font-weight:600;cursor:pointer;width:100%}
+.msg{font-size:12.5px;color:var(--mut);margin-top:8px}
+.foot{font-size:12px;color:var(--mut);text-align:center;margin-top:18px}
+</style>
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#0a1a4a">
+<link rel="icon" href="../icons/icon-192.png">
+</head>
+<body>
+<div class="bar">
+  <div class="top"><h1>🏛 اتاق‌های بازرگانی جهان</h1><a class="back" href="../index.html">دستیار بازرگانان</a></div>
+  <div class="sbox"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="s" type="search" placeholder="جست‌وجوی کشور یا اتاق…" autocomplete="off"></div>
+</div>
+<div class="wrap">
+  <div class="scroll" id="chips"></div>
+  <div id="fav"></div>
+  <div class="sec"><span id="ttl">همه اتاق‌ها</span><small id="cnt"></small></div>
+  <div id="list"></div>
+
+  <div class="card"><h2>افزودن اتاق دلخواه</h2>
+    <label>کشور</label><input class="fi" id="uc" placeholder="مثلاً قزاقستان">
+    <label>نام اتاق</label><input class="fi" id="un" placeholder="نام اتاق بازرگانی">
+    <label>آدرس سایت</label><input class="fi ltr" id="uu" placeholder="https://...">
+    <button class="btn" id="add">افزودن به فهرست</button>
+    <div class="msg" id="msg">موارد افزوده‌شده و ستاره‌ها فقط روی همین مرورگر شما ذخیره می‌شوند.</div>
+  </div>
+  <div class="foot">لینک‌ها به سایت رسمی هر اتاق می‌روند و در تب جدید باز می‌شوند.</div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const CH=[
+ {c:"ایران",f:"🇮🇷",n:"اتاق بازرگانی، صنایع، معادن و کشاورزی ایران",u:"https://iccima.ir"},
+ {c:"ایران",f:"🇮🇷",n:"Iran Chamber Newsroom (انگلیسی)",u:"https://en.otaghiranonline.ir/"},
+ {c:"ایران",f:"🌐",n:"کمیته ایرانی اتاق بازرگانی بین‌المللی (ICC)",u:"https://icc-iran.com"},
+ {c:"ارمنستان",f:"🇦🇲",n:"اتاق بازرگانی و صنایع ارمنستان",u:"https://armcci.am/news"},
+ {c:"عمان",f:"🇴🇲",n:"اتاق بازرگانی و صنایع عمان (OCCI)",u:"https://omanchamber.om/media-center/occi-news/"},
+ {c:"امارات",f:"🇦🇪",n:"اتاق بازرگانی دبی",u:"https://www.dubaichamber.com/en/home/"},
+ {c:"امارات",f:"🇦🇪",n:"اتاق بازرگانی ابوظبی",u:"https://www.abudhabichamber.ae/en"},
+ {c:"ترکیه",f:"🇹🇷",n:"اتحادیه اتاق‌ها و بورس‌های کالایی ترکیه (TOBB)",u:"https://www.tobb.org.tr"},
+ {c:"چین",f:"🇨🇳",n:"شورای ترویج تجارت بین‌المللی چین (CCPIT)",u:"https://www.ccpit.org/"},
+ {c:"روسیه",f:"🇷🇺",n:"اتاق بازرگانی و صنایع فدراسیون روسیه",u:"https://tpprf.ru/en/"},
+ {c:"هند",f:"🇮🇳",n:"فدراسیون اتاق‌های بازرگانی و صنایع هند (FICCI)",u:"https://ficci.in"}
+];
+const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k)||d)}catch(e){return JSON.parse(d)}};
+const sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let custom=ld("ch_custom","[]"),favs=ld("ch_favs","[]"),sel="همه",q="";
+const all=()=>CH.concat(custom.map(x=>({...x,f:"🔖"})));
+const host=u=>u.replace(/^https?:\/\//,"").replace(/\/$/,"");
+const norm=s=>s.toLowerCase().replace(/ي/g,"ی").replace(/ك/g,"ک");
+const arrow='<svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>';
+function row(x){const on=favs.includes(x.u);
+  return `<div class="item"><a class="item" style="margin:0;padding:0;box-shadow:none;flex:1;min-width:0" href="${esc(x.u)}" target="_blank" rel="noopener noreferrer"><div class="flag">${x.f}</div><div class="t"><b>${esc(x.n)}</b><span>${esc(x.c)} · ${esc(host(x.u))}</span></div><div class="go">${arrow}</div></a><button class="star ${on?"on":""}" data-u="${esc(x.u)}" aria-label="ستاره">${on?"★":"☆"}</button></div>`}
+function render(){
+  const list=all(),cs=[...new Set(list.map(x=>x.c))];
+  $("chips").innerHTML=`<button class="cc ${sel==="همه"?"on":""}" data-c="همه">همه <span class="n">${list.length}</span></button>`+cs.map(c=>{const f=list.find(x=>x.c===c).f;return `<button class="cc ${sel===c?"on":""}" data-c="${esc(c)}">${f} ${esc(c)}</button>`}).join("");
+  const qq=norm(q.trim());
+  const shown=list.filter(x=>(sel==="همه"||x.c===sel)&&(!qq||norm(x.n+" "+x.c+" "+x.u).includes(qq)));
+  const fl=list.filter(x=>favs.includes(x.u));
+  $("fav").innerHTML=fl.length&&!qq&&sel==="همه"?`<div class="sec"><span>⭐ مورد علاقه‌ها</span></div>`+fl.map(row).join(""):"";
+  $("ttl").textContent=sel==="همه"?"همه اتاق‌ها":"اتاق‌های "+sel;$("cnt").textContent=shown.length+" مورد";
+  $("list").innerHTML=shown.length?shown.map(row).join(""):'<div class="empty">موردی پیدا نشد. می‌توانید پایین صفحه اتاق جدید اضافه کنید.</div>';
+}
+$("chips").onclick=e=>{const b=e.target.closest("[data-c]");if(b){sel=b.dataset.c;render()}};
+$("s").oninput=e=>{q=e.target.value;render()};
+document.addEventListener("click",e=>{const s=e.target.closest(".star");if(!s)return;const u=s.dataset.u;favs=favs.includes(u)?favs.filter(x=>x!==u):favs.concat(u);sv("ch_favs",favs);render()});
+$("add").onclick=()=>{
+  const c=$("uc").value.trim(),n=$("un").value.trim();let u=$("uu").value.trim();
+  if(!c||!n||!u){$("msg").textContent="هر سه کادر را پر کنید.";return}
+  if(!/^https?:\/\//i.test(u))u="https://"+u;
+  try{const p=new URL(u);if(!/^https?:$/.test(p.protocol)||!p.hostname.includes("."))throw 0}catch(e){$("msg").textContent="آدرس سایت معتبر نیست.";return}
+  custom.push({c,n,u});sv("ch_custom",custom);$("uc").value=$("un").value=$("uu").value="";sel=c;render();$("msg").textContent="اضافه شد.";window.scrollTo({top:0,behavior:"smooth"});
+};
+render();
+</script>
+</body>
+</html>
